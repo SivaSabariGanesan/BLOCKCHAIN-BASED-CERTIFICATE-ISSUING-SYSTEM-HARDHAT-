@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Issuance - Document Issuer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            justify-content: center;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .container {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #message {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+            display: none;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Certificate Issuance</h1>
+        <p>Click on the appropriate button to issue a certificate:</p>
+        <div class="button-container">
+            <button id="minorityBtn">Issue Minority Certificate</button>
+            <button id="majorityBtn">Issue Majority Certificate</button>
+        </div>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        function showMessage(text, isSuccess) {
+            const messageEl = document.getElementById('message');
+            messageEl.textContent = text;
+            messageEl.className = isSuccess ? 'success' : 'error';
+            messageEl.style.display = 'block';
+            setTimeout(() => {
+                messageEl.style.display = 'none';
+            }, 3000);
+        }
+
+        document.getElementById('minorityBtn').addEventListener('click', () => {
+            // Here you would typically make an API call to issue the certificate
+            showMessage('Minority Certificate issued successfully!', true);
+        });
+
+        document.getElementById('majorityBtn').addEventListener('click', () => {
+            // Here you would typically make an API call to issue the certificate
+            showMessage('Majority Certificate issued successfully!', true);
+        });
+    </script>
+</body>
+</html>
