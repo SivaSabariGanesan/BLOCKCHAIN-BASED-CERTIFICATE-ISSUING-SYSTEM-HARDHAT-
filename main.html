@@ -76,10 +76,23 @@
     </form>
 
     <script>
-        const ipfsClient = window.IpfsHttpClient.create({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
-        
-        const contractAddress = "0x6ce4Eb4Fa31e76D05afb0C57FeA1782D8F1f9788";  // Replace with your contract address
-        const contractABI = [
+        // Set up Infura IPFS client with authentication
+        const projectId = "YOUR_PROJECT_ID"; // Replace with your actual Infura Project ID
+        const projectSecret = "YOUR_PROJECT_SECRET"; // Replace with your actual Infura Project Secret
+        const auth = "Basic " + btoa(projectId + ":" + projectSecret);
+
+        const ipfsClient = window.IpfsHttpClient.create({
+            host: 'ipfs.infura.io',
+            port: 5001,
+            protocol: 'https',
+            headers: {
+                authorization: auth
+            }
+        });
+
+        // Polygon Mumbai setup
+        const contractAddress = "0x6ce4Eb4Fa31e76D05afb0C57FeA1782D8F1f9788";  // Replace with your contract address on Polygon Mumbai
+        const contractABI =[
 	{
 		"inputs": [
 			{
@@ -630,7 +643,6 @@
                 const ipfsHash = ipfsResult.path;
 
                 console.log("Uploaded to IPFS:", ipfsHash);
-                console.log(ipfshash);
 
                 // Step 2: Connect to MetaMask
                 if (typeof window.ethereum !== 'undefined') {
@@ -651,7 +663,7 @@
                     alert("MetaMask is not installed.");
                 }
             } catch (error) {
-                console.error("Error:", error);
+                console.error("Error issuing certificate:", error);
                 alert("There was an error issuing the certificate.");
             }
         });
