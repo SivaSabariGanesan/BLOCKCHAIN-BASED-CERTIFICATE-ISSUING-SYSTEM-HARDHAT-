@@ -5,68 +5,122 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Document Issuer</title>
     <style>
+        /* Reset default padding and margin */
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
             color: #333;
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 20px;
             display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            align-items: center;
             justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            background-color: #f4f6f9;
+            margin: 0;
+            flex-direction: column;
         }
+
         h1 {
             color: #2c3e50;
             text-align: center;
+            margin-bottom: 20px;
         }
-        form {
-            background-color: #f9f9f9;
+
+        .form-container {
+            background-color: #fff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 100%;
+            width: 100%;
+            max-width: 400px;
         }
+
         label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
+            color: #555;
         }
+
         input[type="text"],
         input[type="password"] {
             width: 100%;
-            padding: 8px;
+            padding: 12px;
             margin-bottom: 15px;
             border: 1px solid #ddd;
             border-radius: 4px;
             box-sizing: border-box;
+            font-size: 16px;
         }
+
         button {
             background-color: #3498db;
             color: white;
-            padding: 10px 15px;
+            padding: 12px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
             width: 100%;
+            transition: background-color 0.3s ease;
         }
+
         button:hover {
             background-color: #2980b9;
+        }
+
+        /* Media Query for smaller screens */
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+            label {
+                font-size: 14px;
+            }
+            input[type="text"],
+            input[type="password"],
+            button {
+                font-size: 14px;
+            }
+        }
+
+        /* Media Query for larger screens */
+        @media (min-width: 768px) {
+            body {
+                padding: 40px;
+            }
+            .form-container {
+                padding: 30px;
+            }
+            h1 {
+                font-size: 2em;
+            }
         }
     </style>
 </head>
 <body>
     <h1>Login to Document Issuer</h1>
-    <form id="loginForm">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
+    <div class="form-container">
+        <form id="loginForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
 
-        <button type="submit">Login</button>
-    </form>
+            <button type="submit">Login</button>
+        </form>
+    </div>
 
     <script>
         document.getElementById('loginForm').onsubmit = async (e) => {
@@ -89,7 +143,7 @@
                 const result = await response.json();
                 if (response.ok) {
                     alert(result.message);
-                   
+                    window.location.href = 'landing.html'; // Redirect on successful login
                 } else {
                     alert(result.message);
                 }
