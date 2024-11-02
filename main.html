@@ -7,73 +7,125 @@
     <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
     <script src="https://unpkg.com/ipfs-http-client/dist/index.min.js"></script>
     <style>
+        /* Base Styles */
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
             color: #333;
-            max-width: 600px;
-            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
             padding: 20px;
+            background-color: #f4f6f9;
         }
+
         h1 {
             color: #2c3e50;
             text-align: center;
+            margin-bottom: 20px;
         }
+
         form {
             background-color: #f9f9f9;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 600px;
         }
+
         label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
         }
+
         input[type="text"],
         input[type="date"],
         input[type="file"] {
             width: 100%;
-            padding: 8px;
+            padding: 12px;
             margin-bottom: 15px;
             border: 1px solid #ddd;
             border-radius: 4px;
+            font-size: 16px;
             box-sizing: border-box;
         }
+
         button {
             background-color: #3498db;
             color: white;
-            padding: 10px 15px;
+            padding: 12px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s ease;
         }
+
         button:hover {
             background-color: #2980b9;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            form {
+                padding: 15px;
+            }
+
+            input[type="text"],
+            input[type="date"],
+            input[type="file"],
+            button {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5em;
+            }
+
+            form {
+                padding: 10px;
+            }
+
+            input[type="text"],
+            input[type="date"],
+            input[type="file"],
+            button {
+                font-size: 13px;
+                padding: 8px;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Document Issuer</h1>
-    <form id="certificateForm">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
+    <div>
+        <h1>Document Issuer</h1>
+        <form id="certificateForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
 
-        <label for="rollno">Roll Number:</label>
-        <input type="text" id="rollno" name="rollno" required>
+            <label for="rollno">Roll Number:</label>
+            <input type="text" id="rollno" name="rollno" required>
 
-        <label for="metamask">MetaMask Address:</label>
-        <input type="text" id="metamask" name="metamask" required>
+            <label for="metamask">MetaMask Address:</label>
+            <input type="text" id="metamask" name="metamask" required>
 
-        <label for="issuedate">Date of Issue:</label>
-        <input type="date" id="issuedate" name="issuedate" required>
+            <label for="issuedate">Date of Issue:</label>
+            <input type="date" id="issuedate" name="issuedate" required>
 
-        <label for="file">Upload File:</label>
-        <input type="file" id="file" name="file" required>
+            <label for="file">Upload File:</label>
+            <input type="file" id="file" name="file" required>
 
-        <button type="submit">Issue Document</button>
-    </form>
+            <button type="submit">Issue Document</button>
+        </form>
+    </div>
 
     <script>
         // Set up Infura IPFS client with authentication
@@ -90,8 +142,7 @@
             }
         });
 
-        // Polygon Mumbai setup
-        const contractAddress = "0x6ce4Eb4Fa31e76D05afb0C57FeA1782D8F1f9788";  // Replace with your contract address on Polygon Mumbai
+		const contractAddress = "0x6ce4Eb4Fa31e76D05afb0C57FeA1782D8F1f9788";  // Replace with your contract address on Polygon Mumbai
         const contractABI =[
 	{
 		"inputs": [
@@ -623,7 +674,7 @@
 		"stateMutability": "view",
 		"type": "function"
 	}
-];  // Replace with your contract ABI
+];  // Replace with your contract AB
 
         document.getElementById("certificateForm").addEventListener("submit", async (event) => {
             event.preventDefault();
@@ -652,13 +703,14 @@
                     const account = accounts[0];
 
                     // Step 3: Connect to the smart contract
-                    const contract = new web3.eth.Contract(JSON.parse(contractABI), contractAddress);
+                    const contract = new web3.eth.Contract(contractABI, contractAddress);
 
                     // Step 4: Send transaction to issue the certificate
                     const transaction = await contract.methods.issueCertificate(ipfsHash, metamaskAddress).send({ from: account });
 
                     console.log("Certificate issued. Transaction:", transaction);
                     alert("Certificate issued successfully with IPFS hash: " + ipfsHash);
+                    window.location.href = "main.html";
                 } else {
                     alert("MetaMask is not installed.");
                 }
