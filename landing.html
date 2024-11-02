@@ -67,7 +67,8 @@
         <h1>Certificate Issuance</h1>
         <p>Click on the appropriate button to issue a certificate:</p>
         <div class="button-container">
-            <button id="minorityBtn">Issue Minority Certificate</button>
+            <a href="main.html"><button>Issue Minority Certificate</button></a>
+
             <button id="majorityBtn">Issue Majority Certificate</button>
         </div>
         <div id="message"></div>
@@ -79,18 +80,15 @@
             messageEl.textContent = text;
             messageEl.className = isSuccess ? 'success' : 'error';
             messageEl.style.display = 'block';
-            setTimeout(() => {
-                messageEl.style.display = 'none';
-            }, 3000);
-        }
 
+        
         document.getElementById('minorityBtn').addEventListener('click', () => {
-            // Here you would typically make an API call to issue the certificate
-            showMessage('Minority Certificate issued successfully!', true);
+          
+            
         });
 
         document.getElementById('majorityBtn').addEventListener('click', () => {
-            // Here you would typically make an API call to issue the certificate
+            
             showMessage('Majority Certificate issued successfully!', true);
         });
     </script>
