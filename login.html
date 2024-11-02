@@ -54,32 +54,51 @@
         button:hover {
             background-color: #2980b9;
         }
-        .register-link {
-            text-align: center;
-            margin-top: 15px;
-        }
-        .register-link a {
-            color: #3498db;
-            text-decoration: none;
-        }
-        .register-link a:hover {
-            text-decoration: underline;
-        }
     </style>
 </head>
 <body>
     <h1>Login to Document Issuer</h1>
-    <form>
+    <form id="loginForm">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required>
 
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>
 
-        <button type="submit" href="landing.html">Login</button>
+        <button type="submit">Login</button>
     </form>
-    <div class="register-link">
-        <p>Don't have an account? <a href="register.html">Register here</a></p>
-    </div>
+
+    <script>
+        document.getElementById('loginForm').onsubmit = async (e) => {
+            e.preventDefault(); // Prevent default form submission
+
+            // Retrieve form data
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Send login data to the server
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, password }),
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    alert(result.message);
+                   
+                } else {
+                    alert(result.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Login Successfully');
+                window.location.href = 'landing.html'; // Redirect on successful login
+            }
+        };
+    </script>
 </body>
-</html
+</html>
